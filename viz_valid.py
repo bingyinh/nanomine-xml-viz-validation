@@ -7,7 +7,7 @@ import collections
 def xml2dataDict(xmldir):
     dataDict = collections.OrderedDict()
     # load xml files
-    xmlfiles = glob.glob(xmldir + '*.xml')
+    xmlfiles = glob.glob(xmldir + '/*.xml')
     # extract data
     for xml in xmlfiles:
         dataDict = xmlDataExt(xml, dataDict)
@@ -50,7 +50,7 @@ def xml2graph():
 
 def xmlDataExt(xml, dataDict):
     # extract the sampleID
-    sampleID = xml.split('_')[1]
+    sampleID = xml.split('\\')[-1].split('_')[1]
     # read the xml as a tree
     tree = ET.parse(xml)
     # find all parent elements with child "data"
