@@ -224,10 +224,11 @@ class SelectDir(Page):
     # open the askdirectory() dialog window, get the dataDict, call other fn's
     def getxmlDir(self):
         self.xmldir = tkFileDialog.askdirectory()
-        self.dataDict = xml2dataDict(self.xmldir)
-        self.getxmlList()
-        self.makeOutputDir()
-        self.writeDataDict(self.imageDir, self.dataDict)
+        if self.xmldir != '':
+            self.dataDict = xml2dataDict(self.xmldir)
+            self.getxmlList()
+            self.makeOutputDir()
+            self.writeDataDict(self.imageDir, self.dataDict)
     # get the list of xml files in self.xmldir
     def getxmlList(self):
         self.xmllist = [] # init
