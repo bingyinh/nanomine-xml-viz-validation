@@ -44,9 +44,9 @@ class VizValidation(eventBasedAnimation.Animation):
         self.Pages[self.currentPage].KeyFn(event.keysym)
     def onDraw(self, canvas):
         self.Pages[self.currentPage].Draw(canvas, self.step)
-    def onQuit(self):
-        if len(self.dataDict) > 0:
-            self.PILim.close()
+    # def onQuit(self):
+    #     if len(self.dataDict) > 0:
+    #         self.PILim.close()
     def buttonpos(self):
         self.nextx = self.width - 30
         self.nexty = self.height - 30
