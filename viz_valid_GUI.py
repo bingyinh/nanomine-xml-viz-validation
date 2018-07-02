@@ -16,7 +16,7 @@ class VizValidation(eventBasedAnimation.Animation):
     def onInit(self):
         # reset dataDict.pkl
         with open('dataDict.pkl','wb') as f:
-            pickle.dump(('',{}), f)
+            pickle.dump(('',{},True), f)
         # define windows and pages
         self.windowTitle = "Viz Validation"
         self.Pages = [Instruction(), SelectDir(), Viz()]
@@ -107,11 +107,11 @@ class Page(object):
     # read pickle file for dataDict
     def readDataDict(self):
         with open('dataDict.pkl','rb') as f:
-            (self.imageDir, self.dataDict) = pickle.load(f)
+            (self.imageDir, self.dataDict, self.showClick) = pickle.load(f)
     # write pickle file for dataDict
-    def writeDataDict(self, imageDir, dataDict):
+    def writeDataDict(self, imageDir, dataDict, showClick):
         with open('dataDict.pkl','wb') as f:
-            pickle.dump((imageDir, dataDict), f)
+            pickle.dump((imageDir, dataDict, showClick), f)
 
     # generate all of the default plot
     def generateAll(self):
@@ -207,7 +207,7 @@ class SelectDir(Page):
     def drawxmlList(self, canvas):
         counter = 0
         xmlListstr = ''
-        while counter < len(self.xmllist) and counter < 5:
+        while counter < len(self.xmllist) and counter < 10:
             xmlListstr += self.xmllist[counter] + '\n'
             counter += 1
         if counter < len(self.xmllist):
@@ -228,7 +228,7 @@ class SelectDir(Page):
             self.dataDict = xml2dataDict(self.xmldir)
             self.getxmlList()
             self.makeOutputDir()
-            self.writeDataDict(self.imageDir, self.dataDict)
+            self.writeDataDict(self.imageDir, self.dataDict, True)
     # get the list of xml files in self.xmldir
     def getxmlList(self):
         self.xmllist = [] # init
@@ -267,10 +267,11 @@ class Viz(Page):
         # check whether an dataDict exists
         if len(self.dataDict) > 0:
             self.maxGraph = len(self.dataDict) - 1
-    
+
     def drawBoard(self, canvas):
         self.drawButton(canvas)
-        self.drawPlot(canvas)
+        if not self.showClick:
+            self.drawPlot(canvas)
         self.drawSign(canvas)
 
     # everytime self.xlog or self.ylog is changed, call generateCurrent(self)
@@ -339,7 +340,7 @@ class Viz(Page):
         if self.showClick:
             canvas.create_text(self.width/2, self.height/2,
                                text="Click here to show images",
-                               font = "Arial 20", fill = self.bgd)
+                               font = "Arial 20", fill = self.btnActive)
 
     def drawPlot(self, canvas):
         # get the back
@@ -437,6 +438,7 @@ class Viz(Page):
             (self.height-self.imageHeight)/2 <= mouseY <= (self.height+self.imageHeight)/2 and
             self.showClick):
             self.showClick = False
+            self.writeDataDict(self.imageDir, self.dataDict, self.showClick)
             self.generateCurrent()
 
     def logColorUpdate(self):
