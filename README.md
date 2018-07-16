@@ -1,5 +1,5 @@
 # nanomine-xml-viz-validation
-Visualization validation tool for spectra data in xml files in NanoMine. This tool is developed specifically for boosting the NanoMine manual validation efficiency. To run the tool, install Python 2.7 and the required packages, move the xmls to the folder that contains the tool, and run viz_valid_GUI.py. Please always put eventBasedAnimation.pyc and viz_valid.py in the same folder as viz_valid_GUI.py. eventBasedAnimation V1.10 is downloaded from Carnegie Mellon University 15-112 Professor David Kosbie's website (http://www.kosbie.net/cmu/spring-15/15-112/notes/eventBasedAnimation.py).
+Visualization validation tool for spectra data in xml files in NanoMine. This tool is developed specifically for boosting the NanoMine manual validation efficiency. To run the tool, install Python 2.7 and the required packages and run viz_valid_GUI.py. Please always put eventBasedAnimation.pyc and viz_valid.py in the same folder as viz_valid_GUI.py. eventBasedAnimation V1.10 is downloaded from Carnegie Mellon University 15-112 Professor David Kosbie's website (http://www.kosbie.net/cmu/spring-15/15-112/notes/eventBasedAnimation.py).
 
 Code base: Python 2.7
 
