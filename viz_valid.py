@@ -96,9 +96,9 @@ def xmlDataExt(xml, dataDict):
             # unzip x and y
             (x,y) = zip(*coords)
             # log scale or not
-            if abs(np.log10(abs(x[-1]/x[0])))>=4:
+            if x[0]!= 0 and abs(np.log10(abs(x[-1]/x[0])))>=4:
                 xlog = True
-            if abs(np.log10(abs(y[-1]/y[0])))>=4 or np.log10(max(y)) >= 4:
+            if y[0]!= 0 and abs(np.log10(abs(y[-1]/y[0])))>=4 or np.log10(max(y)) >= 4:
                 ylog = True
             # initialize dataDict
             if parKey not in dataDict:
