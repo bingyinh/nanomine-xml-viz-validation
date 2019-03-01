@@ -133,8 +133,9 @@ class Page(object):
             plt.savefig(filename)
             graph_num += 1
         currentFilename = self.imageDir + "0.jpg"
-        self.PILim = Image.open(currentFilename)
-        self.PILphoto = ImageTk.PhotoImage(image = self.PILim)
+        if os.path.exists(currentFilename):
+            self.PILim = Image.open(currentFilename)
+            self.PILphoto = ImageTk.PhotoImage(image = self.PILim)
 
 class Instruction(Page):
     def __init__(self):
@@ -277,6 +278,8 @@ class Viz(Page):
     # everytime self.xlog or self.ylog is changed, call generateCurrent(self)
     def generateCurrent(self):
         self.showClick = False
+        if len(self.dataDict) == 0:
+            return
         graph = self.dataDict.keys()[self.currentGraph]
         plt.figure()
         for sample in self.dataDict[graph]['data']:
