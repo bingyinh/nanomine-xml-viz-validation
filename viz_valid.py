@@ -77,19 +77,22 @@ def xmlDataExt(xml, dataDict):
             data = par.find('.//headers/..')
             if data is None:
                 continue
-            # extract headers
-            xlabel = data.find('.//headers/column[@id="0"]').text
-            ylabel = data.find('.//headers/column[@id="1"]').text
+            # extract headers (cannot assume @id exists)
+            # check there are two './/headers/column'
+            assert len(data.findall('.//headers/column')) == 2, "It seems you are missing one or more headers/column."
+            columns = data.findall('.//headers/column')
+            xlabel = columns[0].text
+            ylabel = columns[1].text
             # init
             xraw = []
             yraw = []
             xlog = False
             ylog = False
             # fill in xraw and yraw
-            for i in data.findall('.//rows/row/column[@id="0"]'):
-                xraw.append(float(i.text))
-            for i in data.findall('.//rows/row/column[@id="1"]'):
-                yraw.append(float(i.text))
+            for row in data.findall('.//rows/row'):
+                assert len(row.findall('column')) == 2, "It seems one of the row is not having 2 column elements."
+                xraw.append(float(row.findall('column')[0].text))
+                yraw.append(float(row.findall('column')[1].text))
             # zip xraw and yraw and sort
             coords = zip(xraw,yraw)
             coords.sort(key=lambda x:x[0])
